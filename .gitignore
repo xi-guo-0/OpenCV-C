@@ -13,3 +13,6 @@ x86/
 
 # project
 opencv2.framework/
+
+# binary
+build
