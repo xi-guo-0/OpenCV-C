@@ -124,27 +124,27 @@ CVC_EXPORT void CVCminMaxIdx(CVCMat src, double* minVal, double* maxVal, int* mi
 CVC_EXPORT void CVCreduce(CVCMat src, CVCMat dst, int dim, int rtype, int dtype);
 
 /** @brief Creates one multi-channel array out of several single-channel ones. */
-CVC_EXPORT void CVCmerge(const CVCMat mv, size_t count, CVCMat dst);
+CVC_EXPORT void CVCmerge1(const CVCMat mv, size_t count, CVCMat dst);
 
-//CVC_EXPORT void CVCmerge(InputArrayOfArrays mv, CVCMat dst);
+CVC_EXPORT void CVCmerge2(CVCInputArray mv, CVCMat dst);
 
 /** @brief Divides a multi-channel array into several single-channel arrays. */
-CVC_EXPORT void CVCsplit(const CVCMat src, CVCMat mvbegin);
+CVC_EXPORT void CVCsplit1(const CVCMat src, CVCMat mvbegin);
 
-//CVC_EXPORT void CVCsplit(CVCMat m, OutputArrayOfArrays mv);
+CVC_EXPORT void CVCsplit2(CVCMat m, CVCOutputArray mv);
 
 /** @brief Copies specified channels from input arrays to the specified channels of */
-CVC_EXPORT void CVCmixChannels(const CVCMat src, size_t nsrcs, CVCMat dst, size_t ndsts, const int* fromTo, size_t npairs);
+CVC_EXPORT void CVCmixChannels1(const CVCMat src, size_t nsrcs, CVCMat dst, size_t ndsts, const int* fromTo, size_t npairs);
 
-//CVC_EXPORT void CVCmixChannels(InputArrayOfArrays src, InputOutputArrayOfArrays dst, const int* fromTo, size_t npairs);
+CVC_EXPORT void CVCmixChannels2(CVCInputArray src, CVCInputOutputArray dst, const int* fromTo, size_t npairs);
 
-//CVC_EXPORT void CVCmixChannels(InputArrayOfArrays src, InputOutputArrayOfArrays dst, const std::vector<int>& fromTo);
+//CVC_EXPORT void CVCmixChannels(CVCInputArray src, CVCInputOutputArray dst, const std::vector<int>& fromTo);
 
 /** @brief Extracts a single channel from src (coi is 0-based index) */
 CVC_EXPORT void CVCextractChannel(CVCMat src, CVCMat dst, int coi);
 
 /** @brief Inserts a single channel to dst (coi is 0-based index) */
-//CVC_EXPORT void CVCinsertChannel(CVCMat src, InputOutputArray dst, int coi);
+CVC_EXPORT void CVCinsertChannel(CVCMat src, CVCInputOutputArray dst, int coi);
 
 /** @brief Flips a 2D array around vertical, horizontal, or both axes. */
 CVC_EXPORT void CVCflip(CVCMat src, CVCMat dst, int flipCode);
@@ -164,14 +164,14 @@ CVC_EXPORT void CVCrepeat(CVCMat src, int ny, int nx, CVCMat dst);
 //CVC_EXPORT CVCMat CVCrepeat(const CVCMat src, int ny, int nx);
 
 /** @brief Applies horizontal concatenation to given matrices. */
-//CVC_EXPORT void CVChconcat(const CVCMat src, size_t nsrc, CVCMat dst);
-//CVC_EXPORT void CVChconcat(CVCMat src1, CVCMat src2, CVCMat dst);
-//CVC_EXPORT void CVChconcat(InputArrayOfArrays src, CVCMat dst);
+CVC_EXPORT void CVChconcat1(const CVCMat src, size_t nsrc, CVCMat dst);
+CVC_EXPORT void CVChconcat2(CVCMat src1, CVCMat src2, CVCMat dst);
+CVC_EXPORT void CVChconcat3(CVCInputArray src, CVCMat dst);
 
 /** @brief Applies vertical concatenation to given matrices. */
-//CVC_EXPORT void CVCvconcat(const CVCMat src, size_t nsrc, CVCMat dst);
-//CVC_EXPORT void CVCvconcat(CVCMat src1, CVCMat src2, CVCMat dst);
-//CVC_EXPORT void CVCvconcat(InputArrayOfArrays src, CVCMat dst);
+CVC_EXPORT void CVCvconcat1(const CVCMat src, size_t nsrc, CVCMat dst);
+CVC_EXPORT void CVCvconcat2(CVCMat src1, CVCMat src2, CVCMat dst);
+CVC_EXPORT void CVCvconcat3(CVCInputArray src, CVCMat dst);
 
 /** @brief computes bitwise conjunction of the two arrays (dst = src1 & src2) */
 CVC_EXPORT void CVCbitwise_and(CVCMat src1, CVCMat src2, CVCMat dst, CVCMat mask);
@@ -235,7 +235,7 @@ CVC_EXPORT void CVCmagnitude(CVCMat x, CVCMat y, CVCMat magnitude);
 //CVC_EXPORT bool CVCcheckRange(CVCMat a, bool quiet, Point* pos, double minVal, double maxVal);
 
 /** @brief converts NaNs to the given number */
-//CVC_EXPORT void CVCpatchNaNs(InputOutputArray a, double val);
+CVC_EXPORT void CVCpatchNaNs(CVCInputOutputArray a, double val);
 
 /** @brief Performs generalized matrix multiplication. */
 CVC_EXPORT void CVCgemm(CVCMat src1, CVCMat src2, double alpha, CVCMat src3, double beta, CVCMat dst, int flags);
@@ -253,7 +253,7 @@ CVC_EXPORT void CVCtransform(CVCMat src, CVCMat dst, CVCMat m);
 CVC_EXPORT void CVCperspectiveTransform(CVCMat src, CVCMat dst, CVCMat m);
 
 /** @brief Copies the lower or the upper half of a square matrix to its another half. */
-//CVC_EXPORT void CVCcompleteSymm(InputOutputArray m, bool lowerToUpper);
+CVC_EXPORT void CVCcompleteSymm(CVCInputOutputArray m, bool lowerToUpper);
 
 /** @brief Initializes a scaled identity matrix. */
 //CVC_EXPORT void CVCsetIdentity(InputOutputArray mtx, const Scalar& s);
@@ -291,15 +291,15 @@ CVC_EXPORT void CVCeigenNonSymmetric(CVCMat src, CVCMat eigenvalues, CVCMat eige
 /** @brief Calculates the covariance matrix of a set of vectors. */
 CVC_EXPORT void CVCcalcCovarMatrix(const CVCMat samples, int nsamples, CVCMat covar, CVCMat mean, int flags, int ctype);
 
-//CVC_EXPORT void CVCcalcCovarMatrix(CVCMat samples, CVCMat covar, InputOutputArray mean, int flags, int ctype);
+CVC_EXPORT void CVCcalcCovarMatrix2(CVCMat samples, CVCMat covar, CVCInputOutputArray mean, int flags, int ctype);
 
-//CVC_EXPORT void CVCPCACompute(CVCMat data, InputOutputArray mean, CVCMat eigenvectors, int maxComponents);
+CVC_EXPORT void CVCPCACompute1(CVCMat data, CVCInputOutputArray mean, CVCMat eigenvectors, int maxComponents);
 
-//CVC_EXPORT void CVCPCACompute2(CVCMat data, InputOutputArray mean, CVCMat eigenvectors, CVCMat eigenvalues, int maxComponents);
+CVC_EXPORT void CVCPCACompute2(CVCMat data, CVCInputOutputArray mean, CVCMat eigenvectors, CVCMat eigenvalues, int maxComponents);
 
-//CVC_EXPORT void CVCPCACompute(CVCMat data, InputOutputArray mean, CVCMat eigenvectors, double retainedVariance);
+CVC_EXPORT void CVCPCACompute3(CVCMat data, CVCInputOutputArray mean, CVCMat eigenvectors, double retainedVariance);
 
-//CVC_EXPORT void CVCPCACompute2(CVCMat data, InputOutputArray mean, CVCMat eigenvectors, CVCMat eigenvalues, double retainedVariance);
+CVC_EXPORT void CVCPCACompute4(CVCMat data, CVCInputOutputArray mean, CVCMat eigenvectors, CVCMat eigenvalues, double retainedVariance);
 
 CVC_EXPORT void CVCPCAProject(CVCMat data, CVCMat mean, CVCMat eigenvectors, CVCMat result);
 

@@ -72,6 +72,29 @@ CVCMat CVCMatCreate(void)
 	return NULL;
 }
 
+CVCMat CVCMatCreate1(int rows, int cols, int type)
+{
+    try {
+        cv::Mat* mat = new cv::Mat(rows, cols, type);
+        return (CVCMat)mat;
+    }
+    catch (...) {}
+
+    return NULL;
+}
+
+
+CVCMat CVCMatCreate2(int rows, int cols, int type, void* data)
+{
+    try {
+        cv::Mat* mat = new cv::Mat(rows, cols, type, data);
+        return (CVCMat)mat;
+    }
+    catch (...) {}
+
+    return NULL;
+}
+
 void CVCMatFree(CVCMat mat)
 {
 	// safety check
@@ -96,6 +119,80 @@ CVCMat CVCMatRoi(CVCMat mat, CVCRect rect)
 {
    cv::Mat *roi = new cv::Mat(ConstCVCMatRef(mat)(CVCRectRef(rect)));
    return (CVCMat)roi;
+}
+
+// InputArray
+CVCInputArray CVCInputArrayCreate(void)
+{
+    try {
+        cv::_InputArray* inputArray = new cv::_InputArray();
+        return (CVCInputArray)inputArray;
+    }
+    catch (...) {}
+
+    return NULL;
+}
+
+CVCInputArray CVCInputArrayCreateFromCVCMatRefVector(CVCMatRefVector matRefVector)
+{
+    try {
+        cv::_InputArray* inputArray = new cv::_InputArray(CVCMatVectorRef(matRefVector));
+        return (CVCInputArray)inputArray;
+    }
+    catch (...) {}
+
+    return NULL;
+}
+
+void CVCInputArrayFree(CVCInputArray mat)
+{
+    // safety check
+    if (mat == NULL) {
+        return;
+    }
+    delete (cv::_InputArray*)mat;
+}
+
+// OutputArray
+CVCOutputArray CVCOutputArrayCreate(void)
+{
+    try {
+        cv::_OutputArray* mat = new cv::_OutputArray();
+        return (CVCOutputArray)mat;
+    }
+    catch (...) {}
+
+    return NULL;
+}
+
+void CVCOutputArrayFree(CVCOutputArray mat)
+{
+    // safety check
+    if (mat == NULL) {
+        return;
+    }
+    delete (cv::_OutputArray*)mat;
+}
+
+// InputOutputArray
+CVCInputOutputArray CVCInputOutputArrayCreate(void)
+{
+    try {
+        cv::_InputOutputArray* mat = new cv::_InputOutputArray();
+        return (CVCInputOutputArray)mat;
+    }
+    catch (...) {}
+
+    return NULL;
+}
+
+void CVCInputOutputArrayFree(CVCInputOutputArray mat)
+{
+    // safety check
+    if (mat == NULL) {
+        return;
+    }
+    delete (cv::_InputOutputArray*)mat;
 }
 
 // Vector of Mat
@@ -132,6 +229,32 @@ CVCMat CVCMatVectorAt(CVCMatVector matVector, size_t index)
 void CVCMatVectorPushBack(CVCMatVector matVector, CVCMat mat)
 {
    (*(std::vector<cv::Mat*>*)matVector).push_back(CVCMatPtr(mat));
+}
+
+CVCMatRefVector CVCMatRefVectorCreate(void)
+{
+    try {
+        std::vector<cv::Mat>* matVector = new std::vector<cv::Mat>();
+        return (CVCMatRefVector)matVector;
+    }
+    catch (...) {}
+
+    return NULL;
+}
+
+void CVCMatRefVectorFree(CVCMatRefVector matVector)
+{
+    // safety check
+    if (matVector == NULL) {
+        return;
+    }
+
+    delete (std::vector<cv::Mat>*)matVector;
+}
+
+void CVCMatRefVectorPushBack(CVCMatRefVector matVector, CVCMat mat)
+{
+    (*(std::vector<cv::Mat>*)matVector).push_back(CVCMatRef(mat));
 }
 
 // Vector of Rect
